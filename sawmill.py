@@ -11,6 +11,7 @@ from flask_bcrypt import Bcrypt
 import git
 from database import db
 from models import option
+from models import user
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
