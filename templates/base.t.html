@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='sawmill.css') }}" />
-    <title>{% block title %}Sawmill{% endblock %}</title><!--{ { opts.get_title() } }-->
+    <title>{% block title %}{{ opts.get_title() }}{% endblock %}</title>
     {% endblock %}
 </head>
 <body>
