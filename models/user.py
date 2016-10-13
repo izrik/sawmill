@@ -29,6 +29,7 @@ class User(db.Model):
     def get_id(self):
         return self.email
 
+    @property
     def is_authenticated(self):
         return self.authenticated
 
