@@ -13,6 +13,7 @@ import git
 from database import db
 from models.option import Option
 from models.user import User
+from models.log_entry import LogEntry
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
