@@ -7,6 +7,7 @@ import argparse
 from os import environ
 import random
 from flask_login import LoginManager, login_user, login_required
+from flask_login import logout_user, current_user
 from flask_bcrypt import Bcrypt
 import git
 from database import db
@@ -98,6 +99,11 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         login_user(user)
         flash('Logged in successfully')
         return redirect(request.args.get('next') or url_for('index'))
+
+    @app.route('/logout')
+    def logout():
+        logout_user()
+        return redirect(url_for('index'))
 
     return app
 

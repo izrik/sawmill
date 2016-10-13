@@ -15,8 +15,10 @@
     {% block content %}{% endblock %}
     <p id="footer">
         {% block footer %}
-            {% if current_user.is_authenticated() %}
-              <small>Logged in as {{ current_user.email }} - <!--a href="{ { url_for('logout') } }">logout</a--></small><br/>
+            {% if current_user.is_authenticated %}
+              <small>Logged in as {{ current_user.email }} - <a href="{{ url_for('logout') }}">logout</a></small><br/>
+            {% else %}
+              <small>Not logged in - <a href="{{ url_for('login') }}">login</a></small><br/>
             {% endif %}
             <small>Sawmill is &copy; Copyright 2016 by <a href="http://metaindu.com/">metaindu</a> and <a href="http://izrik.com">izrik</a>.</small><br/>
             <small>Revision: <code>{{ opts.get_revision() }}</code></small>
