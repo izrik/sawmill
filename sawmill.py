@@ -9,6 +9,8 @@ import random
 from flask_login import LoginManager, login_user, login_required
 from flask_bcrypt import Bcrypt
 import git
+from database import db
+from models import option
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
@@ -44,6 +46,11 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     login_manager.login_view = 'login'
 
     app.bcrypt = Bcrypt(app)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    db.init_app(app)
+    app.db = db
+    app.app_context().push()
 
     @app.route('/')
     def index():
@@ -91,7 +98,7 @@ if __name__ == '__main__':
 
     if args.create_db:
         print('Setting up the database')
-        app.ds.db.create_all()
+        app.db.create_all()
     elif args.create_secret_key:
         digits = '0123456789abcdef'
         key = ''.join((random.choice(digits) for x in xrange(48)))
