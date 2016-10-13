@@ -53,6 +53,26 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     app.db = db
     app.app_context().push()
 
+    class Options(object):
+        @staticmethod
+        def get(key, default_value=None):
+            option = Option.query.get(key)
+            if option is None:
+                return default_value
+            return option.value
+
+        @staticmethod
+        def get_title():
+            return Options.get('title', 'Sawmill')
+
+        @staticmethod
+        def get_revision():
+            return __revision__
+
+    @app.context_processor
+    def setup_options():
+        return {'opts': Options}
+
     @app.route('/')
     def index():
         return render_template('index.t.html')
