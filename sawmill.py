@@ -75,6 +75,7 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         return {'opts': Options}
 
     @app.route('/')
+    @login_required
     def index():
         return render_template('index.t.html')
 
