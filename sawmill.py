@@ -10,8 +10,8 @@ from flask_login import LoginManager, login_user, login_required
 from flask_bcrypt import Bcrypt
 import git
 from database import db
-from models import option
-from models import user
+from models.option import Option
+from models.user import User
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
