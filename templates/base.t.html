@@ -19,8 +19,8 @@
               <small>Logged in as <i>Unknown</i><!--{ { current_user.email } } - <a href="{ { url_for('logout') } }">logout</a>--></small><br/>
             <!--{ % endif % }-->
             <small>Sawmill is &copy; Copyright 2016 by <a href="http://metaindu.com/">metaindu</a> and <a href="http://izrik.com">izrik</a>.</small><br/>
-            <small>Revision: <code><i>revision goes here</i><!--{ { opts.get_revision() } }--></code></small>
+            <small>Revision: <code>{{ opts.get_revision() }}</code></small>
         {% endblock %}
-    </div>
+    </p>
 </body>
 </html>
