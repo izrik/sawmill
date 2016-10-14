@@ -14,6 +14,7 @@ from database import db
 from models.option import Option
 from models.user import User
 from models.log_entry import LogEntry
+from conversions import bool_from_str
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
@@ -25,16 +26,6 @@ DEFAULT_SAWMILL_DEBUG = False
 DEFAULT_SAWMILL_PORT = 6892
 DEFAULT_SAWMILL_DB_URI = 'sqlite:////tmp/test.db'
 DEFAULT_SAWMILL_SECRET_KEY = None
-
-
-def bool_from_str(s):
-    if isinstance(s, basestring):
-        s = s.lower()
-    if s in ['true', 't', '1', 'y']:
-        return True
-    if s in ['false', 'f', '0', 'n']:
-        return False
-    return bool(s)
 
 
 def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
