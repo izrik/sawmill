@@ -98,6 +98,18 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         logout_user()
         return redirect(url_for('index'))
 
+    @app.route('/intake', methods=['POST'])
+    def intake():
+        json = request.get_json()
+        timestamp = json['timestamp']
+        server = json['server']
+        log_name = json['log_name']
+        message = json['message']
+        le = LogEntry(timestamp, server, log_name, message)
+        db.session.add(le)
+        db.session.commit()
+        return ('', 204)
+
     return app
 
 
