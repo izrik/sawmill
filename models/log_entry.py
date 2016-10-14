@@ -1,5 +1,6 @@
 
 from database import db
+from conversions import datetime_from_str
 
 
 class LogEntry(db.Model):
@@ -11,7 +12,7 @@ class LogEntry(db.Model):
     message = db.Column(db.Text(), nullable=True)
 
     def __init__(self, timestamp, server, log_name, message):
-        self.timestamp = timestamp
+        self.timestamp = datetime_from_str(timestamp)
         self.server = server
         self.log_name = log_name
         self.message = message

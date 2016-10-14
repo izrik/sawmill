@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 
+from dateutil.parser import parse as dparse
+from datetime import datetime
+
 
 def str_from_datetime(dt):
     if dt is None:
         return None
     return str(dt)
+
+
+def datetime_from_str(s):
+    if s is None:
+        return None
+    if not isinstance(s, datetime):
+        return dparse(s)
+    return s
 
 
 def bool_from_str(s):
