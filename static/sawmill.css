@@ -16,3 +16,9 @@ table .odd, tr.odd {
 table .even, tr.even {
     background-color: #e0e0e0;
 }
+
+.error {
+    background-color: rgb(221, 16, 55);
+    color: rgb(255, 255, 240);
+    padding: 4px;
+}

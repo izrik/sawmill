@@ -78,20 +78,25 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'GET':
-            return render_template('login.t.html')
+            login_failed = request.args.get('login_failed')
+            return render_template('login.t.html', login_failed=login_failed)
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
+
+        next_url = (request.args.get('next') or request.args.get('next_url') or
+                    url_for('index'))
 
         if (user is None or
                 not app.bcrypt.check_password_hash(user.hashed_password,
                                                    password)):
             flash('Username or Password is invalid', 'error')
-            return redirect(url_for('login'))
+            return redirect(url_for('login', login_failed=1,
+                                    next_url=next_url))
 
         login_user(user)
         flash('Logged in successfully')
-        return redirect(request.args.get('next') or url_for('index'))
+        return redirect(next_url)
 
     @app.route('/logout')
     def logout():

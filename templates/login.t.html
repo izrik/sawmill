@@ -3,6 +3,9 @@
 {% block content %}
   <form action="" method="post" class="form-horizontal">
     <h2>Login</h2>
+    {% if login_failed %}
+    <p><span class="error">The credentials are incorrect.</span></p>
+    {% endif %}
     <input type="text" id="email" name="email" class="input-xlarge"
         placeholder="Enter Email Address" required>
     <input type="password" id="password" name="password" class="input-xlarge"
