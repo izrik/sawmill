@@ -8,7 +8,7 @@ class LogEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, index=True)
     server = db.Column(db.String(100), index=True)
-    log_name = db.Column(db.String(760), index=True)
+    log_name = db.Column(db.String(255), index=True)
     message = db.Column(db.Text(), nullable=True)
 
     def __init__(self, timestamp, server, log_name, message):
