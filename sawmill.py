@@ -106,9 +106,9 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @app.route('/intake', methods=['POST'])
     def intake():
         json = request.get_json()
-        timestamp = json['timestamp']
-        server = json['server']
-        log_name = json['log_name']
+        timestamp = json['@timestamp']
+        server = json['host']
+        log_name = json['source']
         message = json['message']
         le = LogEntry(timestamp, server, log_name, message)
         db.session.add(le)
