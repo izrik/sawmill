@@ -14,7 +14,7 @@ def datetime_from_str(s):
     if s is None:
         return None
     if not isinstance(s, datetime):
-        return dparse(s)
+        return dparse(s).replace(tzinfo=None)
     return s
 
 
