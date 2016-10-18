@@ -104,6 +104,7 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         return redirect(url_for('index'))
 
     @app.route('/intake', methods=['POST'])
+    @login_required
     def intake():
         json = request.get_json()
         timestamp = json['@timestamp']
