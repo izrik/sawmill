@@ -15,6 +15,7 @@ from models.option import Option
 from models.user import User
 from models.log_entry import LogEntry
 from conversions import bool_from_str
+import base64
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
@@ -74,6 +75,22 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @login_manager.user_loader
     def load_user(userid):
         return User.query.filter_by(email=userid).first()
+
+    @login_manager.request_loader
+    def load_user_with_basic_auth(request):
+        api_key = request.headers.get('Authorization')
+        if api_key:
+            api_key = api_key.replace('Basic ', '', 1)
+            api_key = base64.b64decode(api_key)
+            email, password = api_key.split(':', 1)
+            user = User.query.filter_by(email=email).first()
+
+            if (user is None or
+                    not app.bcrypt.check_password_hash(
+                        user.hashed_password, password)):
+                return None
+
+            return user
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
