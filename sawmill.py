@@ -70,8 +70,8 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @app.route('/')
     @login_required
     def index():
-        paginate = LogEntry.query.paginate()
-        return render_template('index.t.html', log_entries=paginate.items)
+        pager = LogEntry.query.paginate()
+        return render_template('index.t.html', pager=pager)
 
     @login_manager.user_loader
     def load_user(userid):

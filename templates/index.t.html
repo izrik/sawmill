@@ -13,7 +13,7 @@
             <th>Message</th>
         </tr>
         </thead>
-        {% for log_entry in log_entries %}
+        {% for log_entry in pager.items %}
         <tr>
             <td>{{ log_entry.id }}</td>
             <td>{{ log_entry.timestamp }}</td>
