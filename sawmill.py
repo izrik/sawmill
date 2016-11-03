@@ -29,6 +29,14 @@ DEFAULT_SAWMILL_DB_URI = 'sqlite:////tmp/test.db'
 DEFAULT_SAWMILL_SECRET_KEY = None
 
 
+def get_form_or_arg(name, default=None):
+    if name in request.form:
+        return request.form[name]
+    if name in request.args:
+        return request.args.get(name)
+    return default
+
+
 def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
                  secret_key=DEFAULT_SAWMILL_SECRET_KEY):
 
@@ -70,10 +78,15 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @app.route('/')
     @login_required
     def index():
-        pager = LogEntry.query.paginate()
-        servers = (s[0] for s in db.session.query(LogEntry.server).distinct().order_by(
-            LogEntry.server).all())
-        return render_template('index.t.html', pager=pager, servers=servers)
+        server = get_form_or_arg('server')
+        query = LogEntry.query
+        if server is not None:
+            query = query.filter_by(server=server)
+        pager = query.paginate()
+        servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
+            .order_by(LogEntry.server).all())
+        return render_template('index.t.html', pager=pager, servers=servers,
+                               server=server)
 
     @login_manager.user_loader
     def load_user(userid):
