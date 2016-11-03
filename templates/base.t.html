@@ -12,8 +12,10 @@
         {% block header %}
         {% endblock %}
     </div>
+    <div id="content">
     {% block content %}{% endblock %}
-    <p id="footer">
+    </div>
+    <div id="footer">
         {% block footer %}
             {% if current_user.is_authenticated %}
               <small>Logged in as {{ current_user.email }} - <a href="{{ url_for('logout') }}">logout</a></small><br/>
@@ -23,6 +25,6 @@
             <small>Sawmill is &copy; Copyright 2016 by <a href="http://metaindu.com/">metaindu</a> and <a href="http://izrik.com">izrik</a>.</small><br/>
             <small>Revision: <code>{{ opts.get_revision() }}</code></small>
         {% endblock %}
-    </p>
+    </div>
 </body>
 </html>
