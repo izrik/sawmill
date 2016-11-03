@@ -41,7 +41,7 @@
                 <span class="gap">…</span>
             {% endif %}
         {% else %}
-            <span><strong>1</strong></span>
+            <span class="gap">1</span>
         {% endfor %}
         {% if pager.has_next %}
             <a rel="next" class="next_page" href="{{ url_for('index', page=pager.next_num, per_page=pager.per_page) }}">&gt;</a>
