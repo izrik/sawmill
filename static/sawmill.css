@@ -22,3 +22,159 @@ table .even, tr.even {
     color: rgb(255, 255, 240);
     padding: 4px;
 }
+
+div.pagination span.gap {
+    color: #d3d3d3;
+    cursor: default;
+    background: #fff;
+    background-color: #fafafa;
+    padding: 7px 12px;
+    margin-left: -1px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+div.pagination span.current {
+    color: #000;
+    background: #fff;
+    background-color: #dfdfdf;
+    border-color: #dfdfdf;
+    padding: 7px 12px;
+    margin-left: -1px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
+
+div.pagination a.previous_page {
+    margin-left: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    color: #3f3f3f;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    text-decoration: none;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
+
+
+div.pagination span.previous_page_disabled {
+    margin-left: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: #d3d3d3;
+    cursor: default;
+    background: #fff;
+    background-color: #fafafa;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    white-space: nowrap;
+    vertical-align: middle;
+    -moz-user-select: none;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
+
+div.pagination a.page {
+    padding: 7px 12px;
+    margin-left: -1px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    color: #3f3f3f;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    text-decoration: none;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
+
+div.pagination a.next_page {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 7px 12px;
+    margin-left: -1px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    color: #3f3f3f;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    text-decoration: none;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
+
+div.pagination span.next_page_disabled {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    color: #d3d3d3;
+    cursor: default;
+    background: #fff;
+    background-color: #fafafa;
+    padding: 7px 12px;
+    margin-left: -1px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+}
