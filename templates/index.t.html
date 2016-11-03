@@ -23,6 +23,7 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="paginate-container">
     <div class="pagination">
         {% if pager.has_prev %}
             <a rel="prev" class="previous_page" href="{{ url_for('index', page=pager.prev_num, per_page=pager.per_page) }}">&lt;</a>
@@ -47,6 +48,7 @@
         {% else %}
             <span class="next_page_disabled">&gt;</span>
         {% endif %}
+    </div>
     </div>
 </div>
 {% endblock %}
