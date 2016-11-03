@@ -53,16 +53,18 @@
 </div>
 <div id="server_filters">
     <h5>Filter by:</h5>
+    <form action="{{ url_for('apply_filters') }}" method="post">
     <table>
         <thead>
         <tr>
             <th>Server</th>
         </tr>
         </thead>
-        {% for s in servers %}
-            <tr><td><a href="{{ url_for('index', server=s) }} ">{{ s }}</a></td></tr>
+        {% for s in all_servers %}
+            <tr><td><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</td></tr>
         {% endfor %}
-        <tr><td><a href="{{ url_for('index') }}" ><b>None</b></a></td></tr>
     </table>
+    <input type="submit" value="Apply Filters">
+    </form>
 </div>
 {% endblock %}

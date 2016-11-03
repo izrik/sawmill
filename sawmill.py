@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template, redirect, url_for, request, flash
-from flask import make_response, Markup, jsonify, json
+from flask import make_response, Markup, jsonify, json, session
 import flask
 import argparse
 from os import environ
@@ -79,14 +79,30 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @login_required
     def index():
         server = get_form_or_arg('server')
+        filter_servers = session.get('filter_servers', [])
         query = LogEntry.query
-        if server is not None:
-            query = query.filter_by(server=server)
+        if filter_servers is not None:
+            query = query.filter(LogEntry.server.in_(filter_servers))
+        query = query.order_by(LogEntry.id)
         pager = query.paginate()
-        servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
+        all_servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
             .order_by(LogEntry.server).all())
-        return render_template('index.t.html', pager=pager, servers=servers,
-                               server=server)
+        return render_template('index.t.html', pager=pager,
+                               all_servers=all_servers, server=server,
+                               filter_servers=filter_servers)
+
+    @app.route('/apply_filters', methods=["GET", "POST"])
+    @login_required
+    def apply_filters():
+        if request.method == 'GET':
+            return redirect(url_for('index'))
+        filter_servers = []
+        for k in request.form:
+            if k.startswith('server_') and request.form[k]:
+                s = k[7:]
+                filter_servers.append(s)
+        session['filter_servers'] = filter_servers
+        return redirect(url_for('index', filter_servers=filter_servers))
 
     @login_manager.user_loader
     def load_user(userid):
