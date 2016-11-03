@@ -71,7 +71,9 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @login_required
     def index():
         pager = LogEntry.query.paginate()
-        return render_template('index.t.html', pager=pager)
+        servers = (s[0] for s in db.session.query(LogEntry.server).distinct().order_by(
+            LogEntry.server).all())
+        return render_template('index.t.html', pager=pager, servers=servers)
 
     @login_manager.user_loader
     def load_user(userid):

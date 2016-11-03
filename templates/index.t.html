@@ -1,7 +1,7 @@
 {% extends "base.t.html" %}
 {% block content scoped %}
 
-<div>
+<div id="logs">
     <h4>Logs</h4>
     <table class="task_notes">
         <thead>
@@ -50,5 +50,11 @@
         {% endif %}
     </div>
     </div>
+</div>
+<div id="server_filters">
+    <h5>Filter by server name:</h5>
+    {% for server in servers %}
+        <p><a href="{{ url_for('index', page=pager.page, per_page=pager.per_page, server=server) }} ">{{ server }}</a></p>
+    {% endfor %}
 </div>
 {% endblock %}
