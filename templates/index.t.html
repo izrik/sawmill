@@ -61,7 +61,7 @@
         </tr>
         </thead>
         {% for s in all_servers %}
-            <tr><td><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</td></tr>
+            <tr><td><label><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</label></td></tr>
         {% endfor %}
     </table>
     <input type="submit" value="Apply Filters">
