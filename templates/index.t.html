@@ -31,7 +31,7 @@
                 &lt;
             {% endif %}
         </span>
-        {% for page in pager.iter_pages(right_current=2, left_edge=1, right_edge=1) %}
+        {% for page in pager.iter_pages(left_current=1, right_current=2, left_edge=1, right_edge=1) %}
             <span>
             {% if page %}
                 {% if page != pager.page %}
