@@ -24,7 +24,7 @@
         {% endfor %}
     </table>
     <div class="pagination">
-        {% for page in pager.iter_pages() %}
+        {% for page in pager.iter_pages(right_current=2, left_edge=1, right_edge=1) %}
             <span>
             {% if page %}
                 {% if page != pager.page %}
