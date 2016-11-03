@@ -23,5 +23,14 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="pagination">
+        {% for page in pager.iter_pages() %}
+            {% if page != pager.page %}
+                <a href="{{ url_for('index', page=page, per_page=pager.per_page) }}">{{ page }}</a>
+            {% else %}
+                <strong>{{ page }}</strong>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
