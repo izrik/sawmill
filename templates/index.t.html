@@ -24,6 +24,13 @@
         {% endfor %}
     </table>
     <div class="pagination">
+        <span>
+            {% if pager.has_prev %}
+                <a href="{{ url_for('index', page=pager.prev_num, per_page=pager.per_page) }}">&lt;</a>
+            {% else %}
+                &lt;
+            {% endif %}
+        </span>
         {% for page in pager.iter_pages(right_current=2, left_edge=1, right_edge=1) %}
             <span>
             {% if page %}
@@ -39,6 +46,13 @@
         {% else %}
             <span><strong>1</strong></span>
         {% endfor %}
+        <span>
+            {% if pager.has_next %}
+                <a href="{{ url_for('index', page=pager.next_num, per_page=pager.per_page) }}">&gt;</a>
+            {% else %}
+                &gt;
+            {% endif %}
+        </span>
     </div>
 </div>
 {% endblock %}
