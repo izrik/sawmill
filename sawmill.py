@@ -81,7 +81,7 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         server = get_form_or_arg('server')
         filter_servers = session.get('filter_servers', [])
         query = LogEntry.query
-        if filter_servers is not None:
+        if filter_servers:
             query = query.filter(LogEntry.server.in_(filter_servers))
         query = query.order_by(LogEntry.id)
         pager = query.paginate()
