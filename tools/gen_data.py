@@ -7,13 +7,13 @@ import base64
 
 def run():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--uri', action='store', default='http://localhost:6892/intake')
+    parser.add_argument('--uri', action='store',
+                        default='http://localhost:6892/intake')
     parser.add_argument('--count', action='store', default=1, type=int)
     parser.add_argument('--username', action='store')
     parser.add_argument('--password', action='store')
 
     args = parser.parse_args()
-
 
     template = '''{{
     "@timestamp": "{}",
