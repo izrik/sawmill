@@ -81,6 +81,7 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     def index():
         server = get_form_or_arg('server')
         filter_servers = session.get('filter_servers', [])
+        filter_log_names = session.get('filter_log_names', [])
         query = LogEntry.query
         if filter_servers:
             query = query.filter(LogEntry.server.in_(filter_servers))
@@ -94,7 +95,8 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
                                all_servers=all_servers, server=server,
                                filter_servers=filter_servers,
                                all_log_names=all_log_names,
-                               izipl=itertools.izip_longest)
+                               izipl=itertools.izip_longest,
+                               filter_log_names=filter_log_names)
 
     @app.route('/apply_filters', methods=["GET", "POST"])
     @login_required
@@ -102,11 +104,16 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         if request.method == 'GET':
             return redirect(url_for('index'))
         filter_servers = []
+        filter_log_names = []
         for k in request.form:
             if k.startswith('server_') and request.form[k]:
                 s = k[7:]
                 filter_servers.append(s)
+            if k.startswith('log_name_') and request.form[k]:
+                s = k[9:]
+                filter_log_names.append(s)
         session['filter_servers'] = filter_servers
+        session['filter_log_names'] = filter_log_names
         return redirect(url_for('index', filter_servers=filter_servers))
 
     @login_manager.user_loader

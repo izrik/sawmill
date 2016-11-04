@@ -65,7 +65,7 @@
             {% set s, ln = sl %}
             <tr>
                 <td>{% if s %}<label><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</label>{% endif %}</td>
-                <td>{% if ln %}<label><input type="checkbox" name="log_name_{{ln|escape}}" {% if ln in filter_servers %} checked {%endif%}>{{ ln }}</label>{% endif %}</td>
+                <td>{% if ln %}<label><input type="checkbox" name="log_name_{{ln|escape}}" {% if ln in filter_log_names %} checked {%endif%}>{{ ln }}</label>{% endif %}</td>
             </tr>
         {% endfor %}
     </table>
