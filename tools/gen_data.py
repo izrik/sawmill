@@ -61,7 +61,8 @@ def run():
                 'Authorization': auth,
                 'Content-type': 'application/json'})
         assert 200 <= resp.status_code < 300
-        print 'posted an entry'
+        print 'posted an entry: {}, {}, {}, {}'.format(timestamp, source,
+                                                       hostname, message)
 
 if __name__ == '__main__':
     run()
