@@ -8,10 +8,16 @@ import base64
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('--uri', action='store',
-                        default='http://localhost:6892/intake')
-    parser.add_argument('--count', action='store', default=1, type=int)
-    parser.add_argument('--username', action='store')
-    parser.add_argument('--password', action='store')
+                        default='http://localhost:6892/intake',
+                        help='The uri to make HTTP POST requests to')
+    parser.add_argument('--count', action='store', default=1, type=int,
+                        help='How many log entry to post.')
+    parser.add_argument('--username', action='store',
+                        help='The username to send as part of Basic '
+                             'authentication')
+    parser.add_argument('--password', action='store',
+                        help='The password to send as part of Basic '
+                             'authentication')
 
     args = parser.parse_args()
 
