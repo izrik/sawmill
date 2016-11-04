@@ -16,6 +16,7 @@ from models.user import User
 from models.log_entry import LogEntry
 from conversions import bool_from_str
 import base64
+import itertools
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
@@ -87,9 +88,13 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         pager = query.paginate()
         all_servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
             .order_by(LogEntry.server).all())
+        all_log_names = (l[0] for l in db.session.query(LogEntry.log_name)
+            .distinct().order_by(LogEntry.log_name).all())
         return render_template('index.t.html', pager=pager,
                                all_servers=all_servers, server=server,
-                               filter_servers=filter_servers)
+                               filter_servers=filter_servers,
+                               all_log_names=all_log_names,
+                               izipl=itertools.izip_longest)
 
     @app.route('/apply_filters', methods=["GET", "POST"])
     @login_required

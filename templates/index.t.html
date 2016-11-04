@@ -58,10 +58,15 @@
         <thead>
         <tr>
             <th>Server</th>
+            <th>Log Name</th>
         </tr>
         </thead>
-        {% for s in all_servers %}
-            <tr><td><label><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</label></td></tr>
+        {% for sl in izipl(all_servers, all_log_names) %}
+            {% set s, ln = sl %}
+            <tr>
+                <td>{% if s %}<label><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</label>{% endif %}</td>
+                <td>{% if ln %}<label><input type="checkbox" name="log_name_{{ln|escape}}" {% if ln in filter_servers %} checked {%endif%}>{{ ln }}</label>{% endif %}</td>
+            </tr>
         {% endfor %}
     </table>
     <input type="submit" value="Apply Filters">
