@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template, redirect, url_for, request, flash
-from flask import make_response, Markup, jsonify, json
+from flask import make_response, Markup, jsonify, json, session
 import flask
 import argparse
 from os import environ
@@ -27,6 +27,14 @@ DEFAULT_SAWMILL_DEBUG = False
 DEFAULT_SAWMILL_PORT = 6892
 DEFAULT_SAWMILL_DB_URI = 'sqlite:////tmp/test.db'
 DEFAULT_SAWMILL_SECRET_KEY = None
+
+
+def get_form_or_arg(name, default=None):
+    if name in request.form:
+        return request.form[name]
+    if name in request.args:
+        return request.args.get(name)
+    return default
 
 
 def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
@@ -70,8 +78,31 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     @app.route('/')
     @login_required
     def index():
-        pager = LogEntry.query.paginate()
-        return render_template('index.t.html', pager=pager)
+        server = get_form_or_arg('server')
+        filter_servers = session.get('filter_servers', [])
+        query = LogEntry.query
+        if filter_servers:
+            query = query.filter(LogEntry.server.in_(filter_servers))
+        query = query.order_by(LogEntry.id)
+        pager = query.paginate()
+        all_servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
+            .order_by(LogEntry.server).all())
+        return render_template('index.t.html', pager=pager,
+                               all_servers=all_servers, server=server,
+                               filter_servers=filter_servers)
+
+    @app.route('/apply_filters', methods=["GET", "POST"])
+    @login_required
+    def apply_filters():
+        if request.method == 'GET':
+            return redirect(url_for('index'))
+        filter_servers = []
+        for k in request.form:
+            if k.startswith('server_') and request.form[k]:
+                s = k[7:]
+                filter_servers.append(s)
+        session['filter_servers'] = filter_servers
+        return redirect(url_for('index', filter_servers=filter_servers))
 
     @login_manager.user_loader
     def load_user(userid):

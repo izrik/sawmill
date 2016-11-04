@@ -1,7 +1,7 @@
 {% extends "base.t.html" %}
 {% block content scoped %}
 
-<div>
+<div id="logs">
     <h4>Logs</h4>
     <table class="task_notes">
         <thead>
@@ -26,14 +26,14 @@
     <div class="paginate-container">
     <div class="pagination">
         {% if pager.has_prev %}
-            <a rel="prev" class="previous_page" href="{{ url_for('index', page=pager.prev_num, per_page=pager.per_page) }}">&lt;</a>
+            <a rel="prev" class="previous_page" href="{{ url_for('index', page=pager.prev_num, per_page=pager.per_page, server=server) }}">&lt;</a>
         {% else %}
             <span class="previous_page_disabled">&lt;</span>
         {% endif %}
         {% for page in pager.iter_pages(left_current=1, right_current=2, left_edge=1, right_edge=1) %}
             {% if page %}
                 {% if page != pager.page %}
-                    <a class="page" href="{{ url_for('index', page=page, per_page=pager.per_page) }}">{{ page }}</a>
+                    <a class="page" href="{{ url_for('index', page=page, per_page=pager.per_page, server=server) }}">{{ page }}</a>
                 {% else %}
                     <span class="current">{{ page }}</span>
                 {% endif %}
@@ -44,11 +44,27 @@
             <span class="gap">1</span>
         {% endfor %}
         {% if pager.has_next %}
-            <a rel="next" class="next_page" href="{{ url_for('index', page=pager.next_num, per_page=pager.per_page) }}">&gt;</a>
+            <a rel="next" class="next_page" href="{{ url_for('index', page=pager.next_num, per_page=pager.per_page, server=server) }}">&gt;</a>
         {% else %}
             <span class="next_page_disabled">&gt;</span>
         {% endif %}
     </div>
     </div>
+</div>
+<div id="server_filters">
+    <h5>Filter by:</h5>
+    <form action="{{ url_for('apply_filters') }}" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th>Server</th>
+        </tr>
+        </thead>
+        {% for s in all_servers %}
+            <tr><td><label><input type="checkbox" name="server_{{s|escape}}" {% if s in filter_servers %} checked {%endif%}>{{ s }}</label></td></tr>
+        {% endfor %}
+    </table>
+    <input type="submit" value="Apply Filters">
+    </form>
 </div>
 {% endblock %}
