@@ -3,6 +3,7 @@ import argparse
 from datetime import datetime
 import requests
 import base64
+import random
 
 
 def run():
@@ -18,6 +19,9 @@ def run():
     parser.add_argument('--password', action='store',
                         help='The password to send as part of Basic '
                              'authentication')
+    parser.add_argument('--servers', action='store', default='host1234',
+                        help='A comma-separated list of servers to randomly '
+                             'select from for each log entry added')
 
     args = parser.parse_args()
 
@@ -33,10 +37,13 @@ def run():
     username = args.username
     password = args.password
     auth = 'Basic ' + base64.b64encode('{}:{}'.format(username, password))
+    servers = list(filter(None, args.servers.split(',')))
+    if not servers:
+        servers = ['host1234']
     for i in xrange(count):
         timestamp = datetime.utcnow()
         source = '/var/log/application.log'
-        hostname = 'host1234'
+        hostname = random.choice(servers)
         message = 'this is the message'
         payload = template.format(timestamp, source, hostname, message)
         resp = requests.post(
