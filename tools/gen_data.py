@@ -41,6 +41,12 @@ def run():
     servers = list(filter(None, args.servers.split(',')))
     if not servers:
         servers = ['host1234']
+    print('uri: {}'.format(uri))
+    print('count: {}'.format(count))
+    print('username: {}'.format(username))
+    print('password: {}'.format(password))
+    print(' -> auth: {}'.format(auth))
+    print('servers: {}'.format(servers))
     for i in xrange(count):
         timestamp = datetime.utcnow()
         source = '/var/log/application.log'
