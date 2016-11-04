@@ -16,6 +16,7 @@ from models.user import User
 from models.log_entry import LogEntry
 from conversions import bool_from_str
 import base64
+import itertools
 
 try:
     __revision__ = git.Repo('.').git.describe(tags=True, dirty=True,
@@ -80,16 +81,24 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
     def index():
         server = get_form_or_arg('server')
         filter_servers = session.get('filter_servers', [])
+        filter_log_names = session.get('filter_log_names', [])
         query = LogEntry.query
         if filter_servers:
             query = query.filter(LogEntry.server.in_(filter_servers))
+        if filter_log_names:
+            query = query.filter(LogEntry.log_name.in_(filter_log_names))
         query = query.order_by(LogEntry.id)
         pager = query.paginate()
         all_servers = (s[0] for s in db.session.query(LogEntry.server).distinct()
             .order_by(LogEntry.server).all())
+        all_log_names = (l[0] for l in db.session.query(LogEntry.log_name)
+            .distinct().order_by(LogEntry.log_name).all())
         return render_template('index.t.html', pager=pager,
                                all_servers=all_servers, server=server,
-                               filter_servers=filter_servers)
+                               filter_servers=filter_servers,
+                               all_log_names=all_log_names,
+                               izipl=itertools.izip_longest,
+                               filter_log_names=filter_log_names)
 
     @app.route('/apply_filters', methods=["GET", "POST"])
     @login_required
@@ -97,11 +106,16 @@ def generate_app(db_uri=DEFAULT_SAWMILL_DB_URI,
         if request.method == 'GET':
             return redirect(url_for('index'))
         filter_servers = []
+        filter_log_names = []
         for k in request.form:
             if k.startswith('server_') and request.form[k]:
                 s = k[7:]
                 filter_servers.append(s)
+            if k.startswith('log_name_') and request.form[k]:
+                s = k[9:]
+                filter_log_names.append(s)
         session['filter_servers'] = filter_servers
+        session['filter_log_names'] = filter_log_names
         return redirect(url_for('index', filter_servers=filter_servers))
 
     @login_manager.user_loader
