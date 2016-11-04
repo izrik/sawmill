@@ -23,6 +23,10 @@ def run():
                         default='host1234',
                         help='A comma-separated list of servers to randomly '
                              'select from for each log entry added')
+    parser.add_argument('--log-names', '--sources', action='store',
+                        default='/var/log/application.log',
+                        help='A comma-separated list of log names to randomly '
+                             'select from for each log entry added')
 
     args = parser.parse_args()
 
@@ -41,15 +45,19 @@ def run():
     servers = list(filter(None, args.servers.split(',')))
     if not servers:
         servers = ['host1234']
+    log_names = list(filter(None, args.log_names.split(',')))
+    if not log_names:
+        log_names = ['/var/log/application.log']
     print('uri: {}'.format(uri))
     print('count: {}'.format(count))
     print('username: {}'.format(username))
     print('password: {}'.format(password))
     print(' -> auth: {}'.format(auth))
     print('servers: {}'.format(servers))
+    print('log names: {}'.format(log_names))
     for i in xrange(count):
         timestamp = datetime.utcnow()
-        source = '/var/log/application.log'
+        source = random.choice(log_names)
         hostname = random.choice(servers)
         message = 'this is the message'
         payload = template.format(timestamp, source, hostname, message)
