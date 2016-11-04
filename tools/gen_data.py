@@ -19,8 +19,8 @@ def run():
     parser.add_argument('--password', action='store',
                         help='The password to send as part of Basic '
                              'authentication')
-    parser.add_argument('--servers', '--hostnames', action='store',
-                        default='host1234',
+    parser.add_argument('--servers', '--hostnames', '--sources',
+                        action='store', default='host1234',
                         help='A comma-separated list of servers to randomly '
                              'select from for each log entry added')
 
